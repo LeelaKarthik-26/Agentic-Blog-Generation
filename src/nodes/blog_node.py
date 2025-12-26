@@ -1,5 +1,4 @@
 from src.states.blogstate import BlogState
-from langchain.prompts import PromptTemplate
 
 class BlogNode:
     """
@@ -14,15 +13,14 @@ class BlogNode:
         Generate a title for the blog post
         """
         if "topic" in state and state["topic"]:
-            prompt = PromptTemplate.from_template(
-            """
-            \r\n You are an expert blog content writer. Use Markdown formating.
+            prompt = """
+            You are an expert blog content writer. Use Markdown formating.
             Generate a blog title for {topic}. This title should be creative 
-            and SEO friendly. \r\n
+            and SEO friendly.
             """
-            )
+
             system_message = prompt.format(topic=state["topic"])
-            response = self.llm.invoke([system_message])
+            response = self.llm.invoke(system_message)
             return {"blog": {'title': response.content}}
 
     def content_generation(self, state:BlogState):
@@ -30,13 +28,11 @@ class BlogNode:
         Generate the content for the blog post based on the title
         """
         if "topic" in state and state["topic"]:
-            prompt = PromptTemplate.from_template(
+            prompt = """
+            You are an expert blog content writer. Use Markdown formating.
+            Generate a blog content for {topic} with detailed breakdown of the content.
             """
-            \r\n You are an expert blog content writer. Use Markdown formating.
-            Generate a blog content for {topic} with detailed breakdown 
-            of the content \r\n
-            """
-            )
+            
             system_message = prompt.format(topic=state['topic'])
-            response = self.llm.invoke([system_message])
+            response = self.llm.invoke(system_message)
             return {"blog": {'title': state['blog']['title'], 'content': response.content}}
