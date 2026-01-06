@@ -4,3 +4,4 @@ Langchain_groq
 python-dotenv
 fastapi
 uvicorn
+langgraph-cli[inmem]

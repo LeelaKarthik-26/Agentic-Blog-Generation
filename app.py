@@ -1,8 +1,7 @@
 import uvicorn
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from src.graphs.graph_builder import GraphBuilder
 from src.llms.groqllm import GroqLLM
-from src.states.blogstare import BlogState
 
 import os
 from dotenv import load_dotenv
@@ -21,6 +20,7 @@ async def create_blogs(request:Request):
     
     data=await request.json()
     topic= data.get("topic","")
+    language = data.get("language","")
 
     ## get the llm object
 
@@ -29,10 +29,15 @@ async def create_blogs(request:Request):
 
     ## get the graph
     graph_builder=GraphBuilder(llm)
-    if topic:
+    if not topic:
+        raise HTTPException(status_code=400, detail="topic is required")
+
+    if language:
+        graph = graph_builder.setup_graph(usecase="language")
+        state = graph.invoke({"topic": topic, "current_language": language.lower()})
+    else:
         graph=graph_builder.setup_graph(usecase="topic")
-        blog_state=BlogState(topic=topic)
-        state=graph.invoke(blog_state)
+        state=graph.invoke({"topic": topic})
 
     return {"data":state}
 
