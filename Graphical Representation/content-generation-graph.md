@@ -2,5 +2,6 @@
 
 ```mermaid
 flowchart TD
-    A[Content Generation]
+    A[Title Generation]
+    B[Content Generation]
 ```

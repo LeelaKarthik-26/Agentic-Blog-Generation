@@ -50,16 +50,17 @@ Simple agent graph (Content Generation):
 
 ```mermaid
 flowchart TD
-    A[Content Generation]
+    A[Title Generation]
+    B[Content Generation]
 ```
 
 Full routing graph (Title + Route + Translations):
 
 ```mermaid
 flowchart TD
-    A[Title Creation] --> B[Content Generation Route Node]
-    B --> C[Hindi Translation]
-    B --> D[French Translation]
+    A[Title Creation] --> B[Content Generation] --> C[Route Node]
+    C --> D[Hindi Translation]
+    C --> E[French Translation]
 ```
 
 Graph files live in `Graphical Representation/`:
@@ -115,8 +116,8 @@ Project structure
 ```text
 .
 +-- Graphical Representation
-¦   +-- content-generation-graph.md
-¦   +-- translation-routing-graph.md
+ï¿½   +-- content-generation-graph.md
+ï¿½   +-- translation-routing-graph.md
 +-- app.py
 +-- langgraph.json
 +-- main.py
@@ -128,14 +129,14 @@ Project structure
 +-- src
     +-- __init__.py
     +-- graphs
-    ¦   +-- __init__.py
-    ¦   +-- graph_builder.py
+    ï¿½   +-- __init__.py
+    ï¿½   +-- graph_builder.py
     +-- llms
-    ¦   +-- __init__.py
-    ¦   +-- groqllm.py
+    ï¿½   +-- __init__.py
+    ï¿½   +-- groqllm.py
     +-- nodes
-    ¦   +-- __init__.py
-    ¦   +-- blog_node.py
+    ï¿½   +-- __init__.py
+    ï¿½   +-- blog_node.py
     +-- states
         +-- __init__.py
         +-- blogstare.py
