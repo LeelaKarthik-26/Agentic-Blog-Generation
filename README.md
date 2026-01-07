@@ -50,8 +50,7 @@ Simple agent graph (Content Generation):
 
 ```mermaid
 flowchart TD
-    A[Title Generation]
-    B[Content Generation]
+    A[Title Generation] --> B[Content Generation]
 ```
 
 Full routing graph (Title + Route + Translations):
